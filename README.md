@@ -1,0 +1,1 @@
+The application **gtingen** generates randomly generated **GTIN13** with valid checksum.
