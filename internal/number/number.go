@@ -1,4 +1,4 @@
-package gtin
+package number
 
 import (
 	"strconv"

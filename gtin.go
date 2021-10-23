@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/MykytaPopov/gtingo/internal/country"
+	n "github.com/MykytaPopov/gtingo/internal/number"
 )
 
 const Gtin8 = 8
@@ -35,7 +36,7 @@ func (g *Gtin) Generate(format int) (string, error) {
 		return "", err
 	}
 
-	gtin := make(Number, format)
+	gtin := make(n.Number, format)
 
 	loadIndicator(gtin)
 	loadCountryCode(gtin)
@@ -55,7 +56,7 @@ func (g Gtin) Calculate(input string) (string, error) {
 		return "", err
 	}
 
-	gtin := NewNumber(input)
+	gtin := n.NewNumber(input)
 
 	loadCheckSum(gtin)
 
@@ -68,7 +69,7 @@ func (g Gtin) Validate(number string) bool {
 		return false
 	}
 
-	n := NewNumber(number)
+	n := n.NewNumber(number)
 
 	loadCheckSum(n)
 
@@ -76,13 +77,13 @@ func (g Gtin) Validate(number string) bool {
 }
 
 // Package type: range 0 - 8
-func loadIndicator(g Number) {
+func loadIndicator(g n.Number) {
 	if len(g) == 14 {
 		g[0] = rand.Intn(8)
 	}
 }
 
-func loadCountryCode(g Number) {
+func loadCountryCode(g n.Number) {
 	key := 0
 	if len(g) == 14 {
 		key = 1
@@ -96,7 +97,7 @@ func loadCountryCode(g Number) {
 	}
 }
 
-func loadBody(g Number) {
+func loadBody(g n.Number) {
 	startIdx := 3
 	if len(g) == 14 {
 		startIdx = 4
@@ -107,7 +108,7 @@ func loadBody(g Number) {
 	}
 }
 
-func loadCheckSum(g Number) {
+func loadCheckSum(g n.Number) {
 	sum := 0
 	multiply := true
 
