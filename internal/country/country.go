@@ -1,4 +1,48 @@
-package gtingo
+package country
+
+import (
+	"math/rand"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
+)
+
+type Country struct {
+	code string
+	name string
+}
+
+func NewCountry() Country {
+	rand.Seed(time.Now().UnixNano())
+
+	return countries[rand.Intn(len(countries)-1)]
+}
+
+func (c Country) GetCode() string {
+	match, _ := regexp.MatchString("\\d{3}-\\d{3}", c.code)
+
+	code := c.code
+
+	if match {
+		rangeCode := strings.Split(c.code, "-")
+
+		max, _ := strconv.Atoi(rangeCode[1])
+		min, _ := strconv.Atoi(rangeCode[0])
+
+		code = strconv.Itoa(rand.Intn(max-min) + min)
+	}
+
+	for len(code) < 3 {
+		code = "0" + code
+	}
+
+	return code
+}
+
+func (c Country) GetName() string {
+	return c.name
+}
 
 var countries = []Country{
 	{
