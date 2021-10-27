@@ -13,13 +13,13 @@ type Country struct {
 	name string
 }
 
-func NewCountry() Country {
+func NewCountry() *Country {
 	rand.Seed(time.Now().UnixNano())
 
-	return countries[rand.Intn(len(countries)-1)]
+	return &countries[rand.Intn(len(countries)-1)]
 }
 
-func (c Country) GetCode() string {
+func (c *Country) GetCode() string {
 	match, _ := regexp.MatchString("\\d{3}-\\d{3}", c.code)
 
 	code := c.code
@@ -40,7 +40,7 @@ func (c Country) GetCode() string {
 	return code
 }
 
-func (c Country) GetName() string {
+func (c *Country) GetName() string {
 	return c.name
 }
 
